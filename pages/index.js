@@ -1,17 +1,62 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
-	const [seconds, setSeconds] = useState(41);
-	const [minutes, setMinutes] = useState(55);
-	const [hours, setHours] = useState(23);
-	const [days, setDays] = useState(8);
+	const [seconds, setSeconds] = useState(0);
+	const [minutes, setMinutes] = useState(0);
+	const [hours, setHours] = useState(0);
+	const [days, setDays] = useState(0);
 
-	const setTime = () => {
-		const deadline = new Date();
-		console.log(deadline.getFullYear());
+	const currDate = new Date();
+	let currYear = currDate.getFullYear();
+	let currMonth = currDate.getMonth();
+	let currDays = currDate.getDate();
+	let currHours = currDate.getHours();
+	let currMinutes = currDate.getMinutes();
+	let currSeconds = currDate.getSeconds();
+
+	const fDeadline = new Date(
+		currYear,
+		currMonth,
+		currDays + 8,
+		currHours + 23,
+		currMinutes + 55,
+		currSeconds + 41
+	);
+
+	const calcTime = () => {
+		const total = Date.parse(fDeadline) - Date.parse(new Date());
+		const secondsT = Math.floor((total / 1000) % 60);
+		const minutesT = Math.floor((total / 1000 / 60) % 60);
+		const hoursT = Math.floor((total / (1000 * 60 * 60)) % 24);
+		const daysT = Math.floor(total / (1000 * 60 * 60 * 24));
+
+		if (total >= 0) {
+			setDays(0);
+			setHours(0);
+			setMinutes(0);
+			setSeconds(0);
+		}
+
+		setDays(daysT);
+		setHours(hoursT);
+		setMinutes(minutesT);
+		setSeconds(secondsT);
+
+		return total;
 	};
+
+	useEffect(() => {
+		const total = calcTime();
+		const timeInterval = setInterval(() => {
+			if (total <= 0) {
+				clearInterval(timeInterval);
+			} else {
+				calcTime();
+			}
+		}, 1000);
+	}, []);
 
 	return (
 		<div className={styles.container}>
@@ -23,12 +68,23 @@ export default function Home() {
 			<main className={styles.main}>
 				<div className={styles.topSection}>
 					<div className={styles.mainTitle}>WE'RE LAUNCHING SOON</div>
-					<div>
-						<button onClick={setTime}>Click</button>
-						{days}-Days
-						{hours}-Hours
-						{minutes}-Minutes
-						{seconds}-Seconds
+					<div className={styles.timerContainer}>
+						<div className={styles.digitLabel}>
+							<div className={styles.digit}>{days}</div>
+							<div className={styles.label}>DAYS</div>
+						</div>
+						<div className={styles.digitLabel}>
+							<div className={styles.digit}>{hours}</div>
+							<div className={styles.label}>HOURS</div>
+						</div>
+						<div className={styles.digitLabel}>
+							<div className={styles.digit}>{minutes}</div>
+							<div className={styles.label}>MINUTES</div>
+						</div>
+						<div className={styles.digitLabel}>
+							<div className={styles.digit}>{seconds}</div>
+							<div className={styles.label}>SECONDS</div>
+						</div>
 					</div>
 				</div>
 				<div className={styles.bottomSection}>
