@@ -1,7 +1,18 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { useState } from 'react';
 
 export default function Home() {
+	const [seconds, setSeconds] = useState(41);
+	const [minutes, setMinutes] = useState(55);
+	const [hours, setHours] = useState(23);
+	const [days, setDays] = useState(8);
+
+	const setTime = () => {
+		const deadline = new Date();
+		console.log(deadline.getFullYear());
+	};
+
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -12,7 +23,13 @@ export default function Home() {
 			<main className={styles.main}>
 				<div className={styles.topSection}>
 					<div className={styles.mainTitle}>WE'RE LAUNCHING SOON</div>
-					<div>countdown timer</div>
+					<div>
+						<button onClick={setTime}>Click</button>
+						{days}-Days
+						{hours}-Hours
+						{minutes}-Minutes
+						{seconds}-Seconds
+					</div>
 				</div>
 				<div className={styles.bottomSection}>
 					<div className={styles.hillsPattern}>

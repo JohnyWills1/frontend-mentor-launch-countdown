@@ -13,8 +13,6 @@
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
   font-family: 'Red Hat Text', sans-serif;
   color: hsl(0, 0%, 100%);
   background-color: hsl(240, 14%, 14%);
@@ -26,7 +24,7 @@
   width: 1440px;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
   overflow: hidden;
@@ -35,7 +33,8 @@
 .mainTitle {
   font-size: 26px;
   letter-spacing: 10px;
-  margin-bottom: 10%;
+  margin-top: 14%;
+  margin-bottom: 14%;
 }
 
 .bottomSection {
